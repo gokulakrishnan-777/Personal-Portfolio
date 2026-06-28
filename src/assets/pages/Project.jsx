@@ -63,7 +63,7 @@ const Project = () => {
                             
                             <p className="text-sm text-muted-foreground">{project.description}</p>
                             
-                            <div className="flex gap-2 mt-2">
+                            <div className="flex gap-2 mt-2 flex-wrap ">
                                 {project.tech.map((tech, idx) => (
                                     <span key={idx} className="text-xs font-mono bg-accent-muted text-accent px-2 py-0.5 rounded border border-line">
                                         {tech}
