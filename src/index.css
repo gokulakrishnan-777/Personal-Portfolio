@@ -40,7 +40,7 @@ body {
   font-family: "Google Sans Flex", sans-serif;
   background-color: var(--background);
   color: var(--foreground);
-  overflow-x: clip;
+  overflow-x: hidden;
   transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1), color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -99,10 +99,43 @@ body {
 html {
   scroll-behavior: smooth;
   overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 section[id],
 main[id],
 footer[id] {
   scroll-margin-top: 72px;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar-wrapper *::-webkit-scrollbar {
+  display: none !important;
+}
+.no-scrollbar-wrapper * {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Custom GitHub Calendar Tooltip - Black Glass Effect */
+.react-activity-calendar__tooltip {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  padding: 6px 12px !important;
+}
+.react-activity-calendar__tooltip-arrow {
+  fill: rgba(0, 0, 0, 0.75) !important;
 }

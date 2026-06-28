@@ -3,6 +3,7 @@ import { themeContext } from '../context/themeApi';
 import { BsMoonStars } from "react-icons/bs";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { GrGithub } from 'react-icons/gr';
+import Tooltip from './Tooltip';
 
 const SECTION_IDS = ['home', 'about', 'education', 'skills', 'project', 'contact'];
 
@@ -45,6 +46,19 @@ const Header = () => {
         }
     }, [theme]);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            if (e.key.toLowerCase() === 'd') {
+                e.preventDefault();
+                setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [setTheme]);
+
     const handleTheme = () => {
         setTheme(prev => prev === 'dark' ? 'light' : 'dark');
     };
@@ -77,7 +91,7 @@ const Header = () => {
 
     return (
         <>
-            <header className="sticky top-2 z-50 w-full overflow-x-hidden bg-background/80 backdrop-blur-md px-2 pt-2">
+            <header className="sticky top-2 z-50 w-full bg-background/80 backdrop-blur-md px-2 pt-2">
                 <div className="screen-line-top screen-line-bottom mx-auto flex h-12 items-center justify-between gap-2 border-x border-line px-2 sm:gap-4 md:max-w-3xl relative">
                     
                     {/* Logo Mark */}
@@ -96,7 +110,7 @@ const Header = () => {
                                 <button
                                     key={id}
                                     onClick={() => scrollTo(id)}
-                                    className={`text-sm font-medium transition-colors hover:text-foreground ${
+                                    className={`text-sm font-medium cursor-pointer transition-colors hover:text-foreground ${
                                         activeSection === id ? 'text-foreground border-b border-accent pb-0.5' : 'text-muted-foreground'
                                     }`}
                                 >
@@ -109,6 +123,24 @@ const Header = () => {
                     {/* Actions */}
                     <div className="flex items-center space-x-2 border-l border-line pl-2">
                         <button 
+                            onClick={() => window.dispatchEvent(new Event('open-search'))}
+                            className="hidden md:flex lg:fixed lg:right-0  items-center gap-2 h-8 px-3 rounded-md border border-line bg-muted/30 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mr-2"
+                            aria-label="Search"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <span>Search...</span>
+                        </button>
+                        
+                        {/* Mobile Search Icon */}
+                        <button 
+                            onClick={() => window.dispatchEvent(new Event('open-search'))}
+                            className="flex md:hidden h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                            aria-label="Search"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        </button>
+
+                        <button 
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="flex h-8 w-8 md:hidden items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                             aria-label="Toggle Menu"
@@ -120,28 +152,32 @@ const Header = () => {
                             )}
                         </button>
 
-                        <a
-                            href="https://github.com/gokulakrishnan-777"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors max-sm:hidden"
-                            aria-label="GitHub Profile"
-                        >
-                            <GrGithub size={18} />
-                        </a>
+                        <Tooltip text="GitHub Repository" position="bottom">
+                            <a
+                                href="https://github.com/gokulakrishnan-777"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors max-sm:hidden"
+                                aria-label="GitHub Profile"
+                            >
+                                <GrGithub size={18} />
+                            </a>
+                        </Tooltip>
                         
-                        <button
-                            onClick={handleTheme}
-                            className="relative flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors overflow-hidden"
-                            aria-label="Toggle Mode"
-                        >
-                            <div className={`absolute transition-all duration-500 ease-in-out ${theme === 'dark' ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-0 opacity-0'}`}>
-                                <MdOutlineWbSunny size={18} />
-                            </div>
-                            <div className={`absolute transition-all duration-500 ease-in-out ${theme === 'dark' ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}>
-                                <BsMoonStars size={18} />
-                            </div>
-                        </button>
+                        <Tooltip text="Toggle Mode" shortcut="D" position="bottom">
+                            <button
+                                onClick={handleTheme}
+                                className="relative flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors overflow-hidden"
+                                aria-label="Toggle Mode"
+                            >
+                                <div className={`absolute transition-all duration-500 ease-in-out ${theme === 'dark' ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-0 opacity-0'}`}>
+                                    <MdOutlineWbSunny size={18} />
+                                </div>
+                                <div className={`absolute transition-all duration-500 ease-in-out ${theme === 'dark' ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}>
+                                    <BsMoonStars size={18} />
+                                </div>
+                            </button>
+                        </Tooltip>
                     </div>
                 </div>
                 
@@ -152,7 +188,7 @@ const Header = () => {
 
             {/* Mobile Navigation Drawer */}
             {isMenuOpen && (
-                <div className="fixed inset-0 top-[56px] z-40 bg-background md:hidden border-t border-line overflow-y-auto">
+                <div className="fixed inset-0 top-[56px] z-40 bg-background md:hidden border-t border-line overflow-y-auto scrollbar-none">
                     <nav className="flex flex-col p-4 gap-2">
                         {SECTION_IDS.map((id) => (
                             <button

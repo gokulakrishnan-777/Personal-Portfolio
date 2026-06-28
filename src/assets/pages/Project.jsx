@@ -1,4 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Tooltip from '../components/Tooltip';
+
+const ProjectCard = ({ project }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <div className="group relative flex flex-col border-b border-line last:border-b-0 hover:bg-muted/5 transition-colors">
+            {/* Header / Toggle */}
+            <button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="flex items-center w-full py-5 text-left cursor-pointer"
+            >
+                {/* Left Icon (Cube) */}
+                <div className="shrink-0 flex size-10 items-center justify-center rounded-lg border border-line bg-muted/20 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" y1="22" x2="12" y2="12"></line></svg>
+                </div>
+                
+                {/* Title & Date */}
+                <div className="grow">
+                    <h3 className="font-semibold text-base sm:text-lg">{project.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-0.5">{project.date}</p>
+                </div>
+
+                {/* Right Icons */}
+                <div className="flex items-center gap-3 text-muted-foreground">
+                    <Tooltip text="Open Project Link" position="top">
+                        <a 
+                            href={project.live} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            onClick={(e) => e.stopPropagation()} 
+                            className="p-1.5 hover:text-foreground transition-colors hidden sm:block"
+                            aria-label="View Live Project"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        </a>
+                    </Tooltip>
+                    <div className="p-1.5 flex items-center justify-center">
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" 
+                            className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                        >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </button>
+
+            {/* Expandable Body */}
+            <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                <div className="overflow-hidden">
+                    <div className="pb-6 pt-2 pl-[56px] pr-4">
+                        <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
+                            {project.description}
+                        </p>
+                        
+                        <div className="flex items-center gap-6 mb-6">
+                            <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-accent flex items-center gap-2 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                Live Demo
+                            </a>
+                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-foreground flex items-center gap-2 transition-colors text-muted-foreground">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                                Source Code
+                            </a>
+                        </div>
+
+                        <div className="flex gap-2 flex-wrap">
+                            {project.tech.map((tech, idx) => (
+                                <span key={idx} className="text-[11px] sm:text-xs font-mono bg-accent-muted dark:text-gray-300 text-gray-600 px-2.5 py-1 rounded-md border border-line">
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Project = () => {
     const projectData = [
@@ -35,7 +116,7 @@ const Project = () => {
         <section id="project" className="mx-auto w-full overflow-x-clip px-2 md:max-w-3xl pt-8 pb-16">
             <h2 className="sr-only">Projects</h2>
             
-            <div className="screen-line-top screen-line-bottom border-x border-line p-4">
+            <div className="screen-line-top screen-line-bottom border-x border-line p-4 md:p-6">
                 <div className="flex items-center gap-4 font-mono text-sm mb-6">
                     <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" y1="22" x2="12" y2="12"></line></svg>
@@ -43,38 +124,9 @@ const Project = () => {
                     <p className="font-semibold text-lg tracking-tight">Featured Projects</p>
                 </div>
 
-                <div className="space-y-8">
+                <div className="flex flex-col border-t border-line mt-4">
                     {projectData.map((project, index) => (
-                        <div key={index} className="group relative flex flex-col gap-2">
-                            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between">
-                                <h3 className="font-semibold text-lg flex items-center gap-2">
-                                    {project.title}
-                                    <span className="text-muted-foreground text-xs font-normal border border-line rounded px-1.5 py-0.5">{project.date}</span>
-                                </h3>
-                                <div className="text-sm text-muted-foreground font-mono mt-1 sm:mt-0 flex gap-3">
-                                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="hover:text-accent flex items-center gap-1 transition-colors">
-                                        Live <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                    </a>
-                                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:text-foreground flex items-center gap-1 transition-colors">
-                                        Code <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <p className="text-sm text-muted-foreground">{project.description}</p>
-                            
-                            <div className="flex gap-2 mt-2 flex-wrap ">
-                                {project.tech.map((tech, idx) => (
-                                    <span key={idx} className="text-xs font-mono bg-accent-muted text-accent px-2 py-0.5 rounded border border-line">
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                            
-                            {index !== projectData.length - 1 && (
-                                <div className="h-px w-full bg-line mt-6"></div>
-                            )}
-                        </div>
+                        <ProjectCard key={index} project={project} />
                     ))}
                 </div>
             </div>
