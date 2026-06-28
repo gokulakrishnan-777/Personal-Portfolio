@@ -5,7 +5,7 @@ const Text = () => {
 
     return (
         <div className="mt-20 w-full overflow-hidden max-w-7xl mx-auto flex justify-center items-center select-none group">
-            <h1 className="text-[12vw] font-black  tracking-tighter whitespace-nowrap opacity-20 group-hover:opacity-100 transition-opacity duration-700 ease-out cursor-crosshair flex">
+            <h1 className="text-[12vw] font-black  tracking-tighter whitespace-nowrap opacity-20 group-hover:opacity-100 transition-opacity duration-700 ease-out  caret-black  dark:caret-white cursor-crosshair flex">
                 {word.split('').map((letter, index) => (
                     <span
                         key={index}

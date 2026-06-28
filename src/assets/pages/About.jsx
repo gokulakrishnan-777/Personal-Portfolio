@@ -16,7 +16,7 @@ export const About = () => {
 
                 <div className="space-y-6">
                     <p className="text-muted-foreground leading-relaxed">
-                        I'm <span className="text-foreground font-medium">Gokulakrishnan A</span>, a Full Stack Developer building high-performance web apps with a focus on robust architectures and user-centric design.
+                        I'm <a href='https://gokulakrishnana.vercel.app' target='_blank' className="text-foreground font-medium">Gokulakrishnan A</a>, a Full Stack Developer building high-performance web apps with a focus on robust architectures and user-centric design.
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
                         I am committed to writing clean, efficient, and maintainable code while continuously learning and adapting to new technologies. I design, code and build digital experiences, passionate about cracking complex problems and inventing elegant solutions.

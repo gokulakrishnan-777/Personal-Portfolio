@@ -82,7 +82,7 @@ const Header = () => {
                     
                     {/* Logo Mark */}
                     <a onClick={() => scrollTo('home')} className="cursor-pointer select-none transition-transform ease-out active:scale-[0.95]">
-                        <div className="flex h-8 px-3 items-center justify-center rounded-lg border border-line bg-background text-2xl font-black text-foreground shadow-sm transition-colors hover:border-accent hover:text-accent">
+                        <div className="flex h-8 px-3 items-center justify-center rounded-lg  text-2xl font-semibold text-foreground  transition-colors ">
                             Gokul
                         </div>
                     </a>
