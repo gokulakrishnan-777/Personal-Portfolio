@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
 
-
-# Crawl delay to prevent server overload
-Crawl-delay: 1
-
 Sitemap: https://gokulakrishnana.vercel.app/sitemap.xml

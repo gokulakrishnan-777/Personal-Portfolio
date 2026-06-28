@@ -1,113 +1,95 @@
-import React, { useRef } from 'react';
-import { SiMongodb, SiNodedotjs, SiReact, SiTailwindcss } from 'react-icons/si';
-import Tilt from 'react-parallax-tilt';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { MapPin, Clock, Phone, Mail, Link as LinkIcon } from 'lucide-react';
+import { GrGithub } from 'react-icons/gr';
+import { SiLinkedin, SiNotion, SiX } from 'react-icons/si';
 
 export const Home = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"]
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
-
-  const scrollTo = (id) => {
-    if (id === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({ top: element.offsetTop - 72, behavior: 'smooth' });
-    }
-  };
-
-  return (
-    <main
-      id="home"
-      ref={ref}
-      className=" min-h-screen flex py-12 md:py-30 relative z-10 justify-center bg-slate-50 dark:bg-slate-950 transition-colors duration-500 overflow-hidden perspective-[2000px]"
-    >
-      {/* Background */}
-      <div className="absolute top-0 left-0 min-w-full h-full opacity-20 dark:opacity-40 pointer-events-none">
-        <motion.div style={{ y: y1 }} className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600 rounded-full blur-[120px] will-change-transform"></motion.div>
-        <motion.div style={{ y: y2 }} className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600 rounded-full blur-[120px] will-change-transform"></motion.div>
-      </div>
-
-      <section className=" mx-auto py-10 px-6 relative z-10 w-full max-w-7xl">
-        <motion.div 
-          initial={{ opacity: 0, y: 100, rotateX: 20, rotateY: -10 }}
-          animate={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut", bounce: 0.4 }}
-          className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 transform-style-3d"
-        >
-
-          {/* Profile Image  */}
-          <Tilt tiltMaxAngleX={15} tiltMaxAngleY={15} scale={1.05} transitionSpeed={1000} className="relative group">
-            <div className="absolute -inset-1 bg-linear-to-r from-purple-600 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
-            <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-110 lg:h-110 rounded-full border-4 border-white dark:border-slate-800 bg-white overflow-hidden shadow-2xl">
-              <img
-                src="/profile.png"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                alt="Gokulakrishnan A"
-              />
+    return (
+        <main id="home" className="mx-auto max-w-screen overflow-x-clip px-2 md:max-w-3xl pt-8 pb-16">
+            {/* Banner Section */}
+            <div className="select-none aspect-2/1 border-x border-line sm:aspect-3/1 flex items-center justify-center text-black dark:text-white screen-line-top screen-line-bottom bg-dot-pattern">
+                <div className="relative inline-block">
+                    <span className="inline-block font-mono text-4xl font-semibold tracking-tight sm:text-5xl">&lt;/&gt;</span>
+                </div>
             </div>
-          </Tilt>
-
-          {/* Content Area */}
-          <div className="flex-1 text-center lg:text-left  space-y-8">
-            <div className="space-y-4">
-
-              <div className="space-y-2">
-                <h2 className="text-3xl md:text-4xl font-semibold dark:text-white">
-                  Hi, I'm <span className="text-purple-600 dark:text-purple-400">Gokulakrishnan A</span>
-                </h2>
-                <h1 className="text-3xl min-w-2xl md:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 dark:from-white dark:via-purple-200 dark:to-white leading-tight">
-                  Full Stack  Developer
-                </h1>
-              </div>
-
-              <p className="text-md md:text-lg text-slate-600 dark:text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                I design, code and build digital experiences. Passionate about
-                <span className="text-slate-900 dark:text-white font-semibold"> cracking complex problems</span> and inventing clean solutions.
-              </p>
+            
+            {/* Profile Section */}
+            <div className="screen-line-bottom flex border-x border-line">
+                <div className="shrink-0 border-r border-line p-2 md:p-3">
+                    <div className="relative isolate overflow-visible rounded-full p-[2px] bg-linear-to-b from-accent to-transparent shadow-black">
+                        <img 
+                            className="size-30 rounded-full object-cover ring-1 ring-border ring-offset-2 ring-offset-background select-none sm:size-40" 
+                            alt="Gokulakrishnan" 
+                            src="/profile.png" 
+                        />
+                    </div>
+                </div>
+                
+                <div className="flex flex-1 flex-col">
+                    <div className="flex grow items-end pb-1 pl-4">
+                        <div className="font-mono text-xs text-muted-foreground select-none max-sm:hidden">
+                            Full Stack Developer
+                        </div>
+                    </div>
+                    <div className="border-t border-line">
+                        <div className="flex items-center gap-2 pl-4 py-1">
+                            <h1 className="text-3xl font-semibold tracking-tight">Gokulakrishnan</h1>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="size-4.5 text-blue-500 select-none"><path fill="currentColor" d="M24 12a4.454 4.454 0 0 0-2.564-3.91 4.437 4.437 0 0 0-.948-4.578 4.436 4.436 0 0 0-4.577-.948A4.44 4.44 0 0 0 12 0a4.423 4.423 0 0 0-3.9 2.564 4.434 4.434 0 0 0-2.43-.178 4.425 4.425 0 0 0-2.158 1.126 4.42 4.42 0 0 0-1.12 2.156 4.42 4.42 0 0 0 .183 2.421A4.456 4.456 0 0 0 0 12a4.465 4.465 0 0 0 2.576 3.91 4.433 4.433 0 0 0 .936 4.577 4.459 4.459 0 0 0 4.577.95A4.454 4.454 0 0 0 12 24a4.439 4.439 0 0 0 3.91-2.563 4.26 4.26 0 0 0 5.526-5.526A4.453 4.453 0 0 0 24 12Zm-13.709 4.917-4.38-4.378 1.652-1.663 2.646 2.646L15.83 7.4l1.72 1.591-7.258 7.926Z"></path></svg>
+                        </div>
+                        <div className="h-14 border-t border-line py-2 pl-4 flex items-center justify-between pr-4">
+                            <p className="inline-block font-mono text-sm text-balance text-muted-foreground">
+                                Building SaaS, AI products, and polished web experiences.
+                            </p>
+                            <a href="#contact" className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium border border-line rounded-lg hover:bg-accent-muted transition-colors text-foreground max-sm:hidden">
+                                Let's Talk
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+            {/* Strip Pattern Divider */}
+            <div className="relative flex h-8 w-full border-x border-line before:absolute before:left-[-100vw] before:-z-1 before:h-8 before:w-[200vw] before:bg-repeating-lines"></div>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <button
-                onClick={() => scrollTo('project')}
-                aria-label="View Projects"
-                className="w-full cursor-pointer sm:w-auto px-8 py-4 bg-slate-900 hover:scale-105  dark:bg-white text-white dark:text-slate-900 rounded-4xl font-bold text-lg hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_20px_50px_rgba(255,255,255,0.1)] transition-all active:scale-95"
-              >
-                View Projects
-              </button>
-
-              <button
-                onClick={() => scrollTo('contact')}
-                aria-label="Contact Me"
-                className="w-full cursor-pointer sm:w-auto px-8 py-4 border-2 hover:scale-105 border-slate-200 hover:text-white dark:border-slate-800 dark:text-white rounded-4xl font-bold text-lg hover:bg-purple-700 dark:hover:bg-slate-800 transition-all active:scale-95"
-              >
-                Contact Me
-              </button>
-            </div>
-
-            {/* Tech Stack Badges */}
-            <div className="pt-6 flex items-center justify-center lg:justify-start gap-6 opacity-60 grayscale hover:grayscale-0 transition-all">
-              <span className="text-xs font-bold tracking-widest uppercase dark:text-white">Tech Stack |</span>
-              <div className="flex gap-4 text-2xl dark:text-white">
-
-                <span title="React" aria-label="React" role="img" className='text-blue-500 hover:scale-105 cursor-pointer  grayscale animate-spin hover:animate-none  hover:grayscale-0'><SiReact /></span>
-                <span title="Node.js" aria-label="Node.js" role="img" className='text-green-800 hover:scale-105 cursor-pointer  grayscale hover:grayscale-0'><SiNodedotjs /></span>
-                <span title="MongoDB" aria-label="MongoDB" role="img" className='text-green-400 hover:scale-105 cursor-pointer grayscale hover:grayscale-0'><SiMongodb /></span>
-                <span title="Tailwind" aria-label="Tailwind CSS" role="img" className='text-sky-500 hover:scale-105 cursor-pointer grayscale hover:grayscale-0'><SiTailwindcss /></span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-    </main>
-  );
+            {/* Info Panel */}
+            <section className="screen-line-top screen-line-bottom border-x border-line p-4 space-y-3">
+                <div className="grid gap-x-4 gap-y-3 sm:grid-cols-2">
+                    <div className="flex items-center gap-4 font-mono text-sm">
+                        <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground"><MapPin size={14}/></div>
+                        <p>Tamil Nadu, India</p>
+                    </div>
+                    <div className="flex items-center gap-4 font-mono text-sm">
+                        <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground"><Clock size={14}/></div>
+                        <p>Availability: Open</p>
+                    </div>
+                    <div className="flex items-center gap-4 font-mono text-sm">
+                        <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground"><Mail size={14}/></div>
+                        <a href="mailto:agokul110@gmail.com" className="hover:text-foreground transition-colors text-muted-foreground">Contact Me</a>
+                    </div>
+                    <div className="flex items-center gap-4 font-mono text-sm">
+                        <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground"><LinkIcon size={14}/></div>
+                        <a href="https://www.gokulakrishnana.vercel.app" target='_blank' className="hover:text-foreground transition-colors text-muted-foreground">gokulakrishnana.vercel.app</a>
+                    </div>
+                </div>
+            </section>
+            
+            {/* Social Links Panel */}
+            <section className="screen-line-top screen-line-bottom border-x border-line">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3">
+                    <a href="https://github.com/Gokulakrishnan-777" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors hover:bg-accent-muted border-r border-b border-line md:border-b-0">
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-foreground"><GrGithub size={16}/></div>
+                        <h3 className="flex-1 font-medium text-sm">GitHub</h3>
+                    </a>
+                    <a href="https://www.linkedin.com/in/gokulakrishnan-a-g8608" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors hover:bg-accent-muted border-b border-line md:border-r md:border-b-0">
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-foreground "><SiLinkedin size={16}/></div>
+                        <h3 className="flex-1 font-medium text-sm">LinkedIn</h3>
+                    </a>
+                    <a href="https://x.com/GOKULAKRIS23058" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors hover:bg-accent-muted col-span-2 md:col-span-1">
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-foreground"><SiX size={16}/></div>
+                        <h3 className="flex-1 font-medium text-sm">X (Twitter)</h3>
+                    </a>
+                </div>
+            </section>
+        </main>
+    );
 };

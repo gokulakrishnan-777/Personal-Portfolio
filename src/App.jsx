@@ -14,17 +14,15 @@ const Contact = lazy(() => import('./assets/pages/Contact.jsx').then(module => (
 function App() {
     return (
         <ApiProvider>
-            {/* <div className="relative bg-slate-50 dark:bg-slate-950 transition-colors duration-500 overflow-x-hidden"> */}
-                <Header />
-                <Home />
-                <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center dark:bg-slate-950 bg-slate-50"><div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div>}>
-                    <About />
-                    <Education />
-                    <Skill />
-                    <Project />
-                    <Contact />
-                </Suspense>
-            {/* </div> */}
+            <Header />
+            <Home />
+            <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>}>
+                <About />
+                <Education />
+                <Skill />
+                <Project />
+                <Contact />
+            </Suspense>
         </ApiProvider>
     )
 }

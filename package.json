@@ -8,25 +8,26 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "doctor": "npx react-doctor@latest"
+    "doctor": "npx react-doctor@latest",
+    "test": "jest"
   },
   "dependencies": {
+    "@babel/preset-react": "^8.0.1",
     "@fontsource-variable/sansita-swashed": "^5.2.8",
-    "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.1",
-    "framer-motion": "^12.41.0",
+    "jsdom": "^29.1.1",
+    "lucide-react": "^1.21.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-hook-form": "^7.71.2",
     "react-icons": "^5.5.0",
-    "react-parallax-tilt": "^1.7.332",
-    "react-redux": "^9.2.0",
     "react-router": "^7.13.1",
-    "sweetalert2": "^11.26.21",
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^8.0.2",
     "@eslint/js": "^9.39.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
@@ -35,9 +36,17 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "vite": "^8.0.0-beta.13"
   },
   "overrides": {
     "vite": "^8.0.0-beta.13"
+  },
+  "babel": {
+    "presets": [
+      ["@babel/preset-env", { "targets": { "node": "current" } }],
+      ["@babel/preset-react", { "runtime": "automatic" }]
+    ]
   }
 }
