@@ -6,10 +6,10 @@ export const Contact = () => {
     const [revealed, setRevealed] = useState(false);
 
     return (
-        <footer id="contact" className="pt-8 pb-16 w-full">
+        <footer id="contact" className="pt-8  w-full mx-auto md:max-w-3xl overflow-x-clip">
             <h2 className="sr-only">Contact & Footer</h2>
             
-            <div className="mx-auto max-w-screen px-2 md:max-w-3xl">
+            <div className="mx-auto w-full px-2 ">
                 <div className="screen-line-top screen-line-bottom border-x border-line p-4 md:p-6">
                     <div className="flex items-center gap-4 font-mono text-sm mb-8">
                         <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground">
@@ -67,13 +67,7 @@ export const Contact = () => {
                     </div>
                 </div>
             </div>
-            
-            {/* End of page huge text */}
-            <div className="mt-20 w-full overflow-hidden max-w-7xl mx-auto flex justify-center items-center select-none group">
-                <h1 className="text-[12vw] font-black tracking-tighter whitespace-nowrap text-transparent [-webkit-text-stroke:2px_var(--color-muted-foreground)] opacity-20 group-hover:opacity-100   transition-all duration-700 ease-out cursor-default ">
-                    GOKUL
-                </h1>
-            </div>
+          
         </footer>
     );
 };

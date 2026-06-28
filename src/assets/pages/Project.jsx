@@ -32,7 +32,7 @@ const Project = () => {
     ];
 
     return (
-        <section id="project" className="mx-auto max-w-screen overflow-x-clip px-2 md:max-w-3xl pt-8 pb-16">
+        <section id="project" className="mx-auto w-full overflow-x-clip px-2 md:max-w-3xl pt-8 pb-16">
             <h2 className="sr-only">Projects</h2>
             
             <div className="screen-line-top screen-line-bottom border-x border-line p-4">
