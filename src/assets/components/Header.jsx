@@ -7,6 +7,27 @@ import Tooltip from './Tooltip';
 
 const SECTION_IDS = ['home', 'about', 'education', 'skills', 'project', 'contact'];
 
+const playHapticSound = () => {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.04);
+        gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.04);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.04);
+    } catch (e) {
+        // ignore
+    }
+};
+
 const Header = () => {
     const { theme, setTheme } = useContext(themeContext);
     const [activeSection, setActiveSection] = useState('home');
@@ -52,6 +73,7 @@ const Header = () => {
             
             if (e.key.toLowerCase() === 'd') {
                 e.preventDefault();
+                playHapticSound();
                 setTheme(prev => prev === 'dark' ? 'light' : 'dark');
             }
         };
@@ -60,6 +82,7 @@ const Header = () => {
     }, [setTheme]);
 
     const handleTheme = () => {
+        playHapticSound();
         setTheme(prev => prev === 'dark' ? 'light' : 'dark');
     };
 
@@ -196,8 +219,8 @@ const Header = () => {
                                 onClick={() => scrollTo(id)}
                                 className={`flex w-full items-center justify-between p-4 rounded-xl border border-line text-lg font-medium transition-colors ${
                                     activeSection === id 
-                                        ? 'bg-accent/10 text-foreground border-accent/50' 
-                                        : 'bg-muted/30 text-muted-foreground hover:bg-muted'
+                                        ? 'bg-accent/10 text-accent border-accent/20' 
+                                        : 'hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300 text-foreground'
                                 }`}
                             >
                                 {id.charAt(0).toUpperCase() + id.slice(1)}

@@ -78,15 +78,15 @@ export const Home = () => {
             {/* Social Links Panel */}
             <section className="screen-line-top screen-line-bottom border-x border-line">
                 <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3">
-                    <a href="https://github.com/Gokulakrishnan-777" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors hover:bg-accent-muted border-r border-b border-line md:border-b-0">
+                    <a href="https://github.com/Gokulakrishnan-777" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-all duration-300 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md border-r border-b border-line md:border-b-0">
                         <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-foreground"><GrGithub size={16}/></div>
                         <h3 className="flex-1 font-medium text-sm">GitHub</h3>
                     </a>
-                    <a href="https://www.linkedin.com/in/gokulakrishnan-a-g8608" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors hover:bg-accent-muted border-b border-line md:border-r md:border-b-0">
+                    <a href="https://www.linkedin.com/in/gokulakrishnan-a-g8608" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-4 p-4 pr-2 transition-all duration-300 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md border-b border-line md:border-r md:border-b-0">
                         <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-line bg-background text-foreground "><SiLinkedin size={16}/></div>
                         <h3 className="flex-1 font-medium text-sm">LinkedIn</h3>
                     </a>
-                    <a href="https://x.com/GOKULAKRIS23058" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer place-self-center md:place-self-auto  items-center gap-4 p-4 pr-2 transition-colors hover:bg-accent-muted col-span-2 md:col-span-1">
+                    <a href="https://x.com/GOKULAKRIS23058" target="_blank" rel="noopener noreferrer" className="flex cursor-pointer place-self-center md:place-self-auto  items-center gap-4 p-4 pr-2 transition-all duration-300 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md col-span-2 md:col-span-1">
                         <div className="flex size-8 shrink-0  items-center justify-center rounded-lg border border-line bg-background text-foreground"><SiX size={16}/></div>
                         <h3 className="flex-1 font-medium text-sm">X (Twitter)</h3>
                     </a>

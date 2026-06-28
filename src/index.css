@@ -139,3 +139,28 @@ footer[id] {
 .react-activity-calendar__tooltip-arrow {
   fill: rgba(0, 0, 0, 0.75) !important;
 }
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 5px;
+  cursor: grabbing;
+  
+}
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: white;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #e5e5e5;
+}

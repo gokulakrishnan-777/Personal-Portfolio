@@ -37,7 +37,7 @@ const Education = () => {
 
                 <div className="space-y-8">
                     {educationData.map((edu, index) => (
-                        <div key={index} className="group relative flex flex-col gap-2">
+                        <div key={index} className="group relative flex flex-col gap-2 p-3 -mx-3 rounded-xl hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300">
                             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between">
                                 <h3 className="font-semibold text-lg flex items-center gap-2">
                                     {edu.degree}

@@ -5,7 +5,7 @@ const ProjectCard = ({ project }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="group relative flex flex-col border-b border-line last:border-b-0 hover:bg-muted/5 transition-colors">
+        <div className="group relative flex flex-col border-b border-line last:border-b-0 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300">
             {/* Header / Toggle */}
             <button 
                 onClick={() => setIsExpanded(!isExpanded)}
