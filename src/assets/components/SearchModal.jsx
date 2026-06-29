@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, Command, ArrowRight, User, BookOpen, Wrench, Briefcase, Mail } from 'lucide-react';
 
 const SEARCH_DATA = [
@@ -8,6 +9,8 @@ const SEARCH_DATA = [
     { id: 'skills', label: 'Skills', icon: <Wrench size={16} />, category: 'Section' },
     { id: 'project', label: 'Projects', icon: <Briefcase size={16} />, category: 'Section' },
     { id: 'contact', label: 'Contact', icon: <Mail size={16} />, category: 'Section' },
+    { id: 'blog', label: 'Blog (All Posts)', icon: <BookOpen size={16} />, category: 'Page', url: '/blog' },
+    { id: 'skillswap', label: 'Blog: SkillSwap Architecture', icon: <BookOpen size={16} />, category: 'Page', url: '/blog/skillswap' },
     { id: 'github', label: 'GitHub Profile', icon: <Command size={16} />, category: 'Link', url: 'https://github.com/gokulakrishnan-777' },
     { id: 'linkedin', label: 'LinkedIn', icon: <Command size={16} />, category: 'Link', url: 'https://www.linkedin.com/in/gokulakrishnxn/' },
     { id: 'resume', label: 'Download Resume', icon: <Command size={16} />, category: 'Link', url: '/Gokulakrishnan__A_Full stack developer.pdf' },
@@ -18,6 +21,8 @@ const SearchModal = () => {
     const [query, setQuery] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const inputRef = useRef(null);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     // Toggle Modal Event
     useEffect(() => {
@@ -63,7 +68,9 @@ const SearchModal = () => {
     }, [query]);
 
     const handleSelect = (item) => {
-        if (item.url) {
+        if (item.category === 'Page' && item.url) {
+            navigate(item.url);
+        } else if (item.url) {
             if (item.id === 'resume') {
                 window.location.href = item.url;
             } else {
@@ -71,6 +78,25 @@ const SearchModal = () => {
             }
         } else {
             const HEADER = 72;
+            
+            // Handle cross-page navigation back to home
+            if (location.pathname !== '/') {
+                navigate('/', { replace: false });
+                setTimeout(() => {
+                    if (item.id === 'home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        const el = document.getElementById(item.id);
+                        if (el) {
+                            const top = el.getBoundingClientRect().top + window.scrollY - HEADER;
+                            window.scrollTo({ top, behavior: 'smooth' });
+                        }
+                    }
+                }, 100);
+                setIsOpen(false);
+                return;
+            }
+
             if (item.id === 'home') {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
@@ -102,10 +128,10 @@ const SearchModal = () => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-100 backdrop-blur-sm  flex items-start justify-center pt-[15vh] sm:pt-[20vh] px-4">
+        <div className="fixed inset-0 z-100  backdrop-blur-sm  flex items-start justify-center pt-[15vh] sm:pt-[20vh] px-4">
             {/* Backdrop */}
             <div 
-                className="fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity" 
+                className="fixed  inset-0 bg-background/80 backdrop-blur-sm transition-opacity" 
                 onClick={() => setIsOpen(false)}
             ></div>
 
@@ -116,7 +142,7 @@ const SearchModal = () => {
                 aria-modal="true"
             >
                 {/* Search Input */}
-                <div className="flex items-center px-4 py-4 border-b border-line">
+                <div className="flex cursor-pointer items-center px-4 py-4 border-b border-line">
                     <Search className="w-5 h-5 text-muted-foreground mr-3" />
                     <input
                         ref={inputRef}
@@ -166,8 +192,8 @@ const SearchModal = () => {
                 </div>
                 
                 {/* Footer */}
-                <div className="hidden sm:flex items-center justify-between px-4 py-3 border-t border-line bg-muted/30 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-4">
+                <div className="hidden sm:flex items-center  justify-between px-4 py-3 border-t border-line bg-muted/30 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-4 ">
                         <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded border border-line bg-background font-mono shadow-sm">↑</kbd> <kbd className="px-1.5 py-0.5 rounded border border-line bg-background font-mono shadow-sm">↓</kbd> to navigate</span>
                         <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded border border-line bg-background font-mono shadow-sm">Enter</kbd> to select</span>
                     </div>

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { themeContext } from '../context/themeApi';
 import { BsMoonStars } from "react-icons/bs";
 import { MdOutlineWbSunny } from "react-icons/md";
@@ -17,7 +18,7 @@ const playHapticSound = () => {
         osc.connect(gainNode);
         gainNode.connect(ctx.destination);
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(400, ctx.currentTime);
+        osc.frequency.setValueAtTime(600, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.04);
         gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.04);
@@ -32,6 +33,8 @@ const Header = () => {
     const { theme, setTheme } = useContext(themeContext);
     const [activeSection, setActiveSection] = useState('home');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -89,6 +92,26 @@ const Header = () => {
     const scrollTo = (id) => {
         setIsMenuOpen(false); // Close menu on click
         const HEADER = 72;
+        
+        // If we are not on the home page (e.g. blog), navigate to home first
+        if (window.location.pathname !== '/') {
+            // We use navigate from react-router-dom
+            navigate('/', { replace: false });
+            // Wait for navigation and DOM render before scrolling
+            setTimeout(() => {
+                if (id === 'home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                const el = document.getElementById(id);
+                if (el) {
+                    const top = el.getBoundingClientRect().top + window.scrollY - HEADER;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            }, 100);
+            return;
+        }
+
         if (id === 'home') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
@@ -134,7 +157,7 @@ const Header = () => {
                                     key={id}
                                     onClick={() => scrollTo(id)}
                                     className={`text-sm font-medium cursor-pointer transition-colors hover:text-foreground ${
-                                        activeSection === id ? 'text-foreground border-b border-accent pb-0.5' : 'text-muted-foreground'
+                                        activeSection === id && location.pathname === '/' ? 'text-foreground border-b border-accent pb-0.5' : 'text-muted-foreground'
                                     }`}
                                 >
                                     {id.charAt(0).toUpperCase() + id.slice(1)}
@@ -145,9 +168,15 @@ const Header = () => {
 
                     {/* Actions */}
                     <div className="flex items-center space-x-2 border-l border-line pl-2">
+                        <Link
+                            to="/blog"
+                            className="hidden md:flex items-center justify-center h-8 px-4 rounded-full bg-foreground text-background text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 mr-2"
+                        >
+                            Blog
+                        </Link>
                         <button 
                             onClick={() => window.dispatchEvent(new Event('open-search'))}
-                            className="hidden md:flex lg:fixed lg:right-0  items-center gap-2 h-8 px-3 rounded-md border border-line bg-muted/30 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mr-2"
+                            className="hidden md:flex cursor-pointer lg:fixed lg:right-0  items-center gap-2 h-8 px-3 rounded-md border border-line bg-muted/30 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mr-2"
                             aria-label="Search"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -190,7 +219,7 @@ const Header = () => {
                         <Tooltip text="Toggle Mode" shortcut="D" position="bottom">
                             <button
                                 onClick={handleTheme}
-                                className="relative flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors overflow-hidden"
+                                className="relative flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors overflow-hidden cursor-pointer"
                                 aria-label="Toggle Mode"
                             >
                                 <div className={`absolute transition-all duration-500 ease-in-out ${theme === 'dark' ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-0 opacity-0'}`}>
@@ -211,7 +240,7 @@ const Header = () => {
 
             {/* Mobile Navigation Drawer */}
             {isMenuOpen && (
-                <div className="fixed inset-0 top-[56px] z-40 bg-background md:hidden border-t border-line overflow-y-auto scrollbar-none">
+                <div className="fixed inset-0 top-14 z-40 bg-background md:hidden border-t border-line overflow-y-auto scrollbar-none">
                     <nav className="flex flex-col p-4 gap-2">
                         {SECTION_IDS.map((id) => (
                             <button
@@ -229,6 +258,12 @@ const Header = () => {
                         ))}
                         
                         <div className="mt-4 flex gap-4 p-4 border border-line rounded-xl bg-muted/30">
+                            <Link
+                                to="/blog"
+                                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-background border border-line py-2 text-sm font-medium hover:bg-accent-muted transition-colors"
+                            >
+                                Blog
+                            </Link>
                             <a
                                 href="https://github.com/gokulakrishnan-777"
                                 target="_blank"

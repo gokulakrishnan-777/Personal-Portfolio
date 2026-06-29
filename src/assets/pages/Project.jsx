@@ -5,7 +5,7 @@ const ProjectCard = ({ project }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="group relative flex flex-col border-b border-line last:border-b-0 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300">
+        <div className="group relative px-2 flex flex-col border-b border-line last:border-b-0 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300">
             {/* Header / Toggle */}
             <button 
                 onClick={() => setIsExpanded(!isExpanded)}
@@ -51,7 +51,7 @@ const ProjectCard = ({ project }) => {
             {/* Expandable Body */}
             <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                 <div className="overflow-hidden">
-                    <div className="pb-6 pt-2 pl-[56px] pr-4">
+                    <div className="pb-6 pt-2 pl-14 pr-4">
                         <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
                             {project.description}
                         </p>
@@ -124,7 +124,7 @@ const Project = () => {
                     <p className="font-semibold text-lg tracking-tight">Featured Projects</p>
                 </div>
 
-                <div className="flex flex-col border-t border-line mt-4">
+                <div className="flex flex-col border-t border-line mt-4 ">
                     {projectData.map((project, index) => (
                         <ProjectCard key={index} project={project} />
                     ))}

@@ -10,6 +10,7 @@
   --color-line: var(--line);
   --color-accent: var(--accent);
   --color-accent-muted: var(--accent-muted);
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @layer base {
@@ -44,7 +45,9 @@ body {
   transition: background-color 0.7s cubic-bezier(0.4, 0, 0.2, 1), color 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-*, ::before, ::after {
+*,
+::before,
+::after {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 700ms;
@@ -54,6 +57,7 @@ body {
 .screen-line-top {
   position: relative;
 }
+
 .screen-line-top::before {
   content: "";
   position: absolute;
@@ -68,6 +72,7 @@ body {
 .screen-line-bottom {
   position: relative;
 }
+
 .screen-line-bottom::after {
   content: "";
   position: absolute;
@@ -104,7 +109,9 @@ html {
 
 section[id],
 main[id],
-footer[id] {
+footer[id],
+h2[id],
+h3[id] {
   scroll-margin-top: 72px;
 }
 
@@ -112,14 +119,18 @@ footer[id] {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-none {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .no-scrollbar-wrapper *::-webkit-scrollbar {
   display: none !important;
 }
+
 .no-scrollbar-wrapper * {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
@@ -136,24 +147,28 @@ footer[id] {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   padding: 6px 12px !important;
 }
+
 .react-activity-calendar__tooltip-arrow {
   fill: rgba(0, 0, 0, 0.75) !important;
 }
 
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: black;
-  border-radius: 5px;
+  border-radius: 1px;
   cursor: grabbing;
-  
+
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: black;
 }
@@ -161,6 +176,31 @@ footer[id] {
 .dark ::-webkit-scrollbar-thumb {
   background: white;
 }
+
+@keyframes flipInX {
+  0% {
+    transform: perspective(400px) rotateX(90deg);
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotateX(-10deg);
+  }
+
+  70% {
+    transform: perspective(400px) rotateX(10deg);
+  }
+
+  100% {
+    transform: perspective(400px) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-flip-in-x {
+  animation: flipInX 0.6s ease-out forwards;
+}
+
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #e5e5e5;
 }

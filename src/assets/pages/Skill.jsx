@@ -1,6 +1,6 @@
 import React from 'react';
 import { Wrench, MousePointer2, Zap, Network } from 'lucide-react';
-import { SiMongodb, SiExpress, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript, SiNextdotjs, SiGit, SiPostman, SiVite, SiRedux, SiJest, SiDocker, SiOpenai, SiBun, SiAnthropic, SiBootstrap, SiSupabase } from 'react-icons/si';
+import { SiMongodb, SiExpress, SiReact, SiNodedotjs, SiTailwindcss, SiJavascript, SiNextdotjs, SiGit, SiPostman,  SiRedux, SiJest, SiDocker, SiOpenai, SiBun, SiAnthropic, SiBootstrap, SiSupabase } from 'react-icons/si';
 
 const Skill = () => {
     // Core tech stack
@@ -48,7 +48,7 @@ const Skill = () => {
                     {coreSkills.map((skill, index) => (
                         <div 
                             key={index} 
-                            className="flex flex-col items-center justify-center w-1/2 sm:w-1/3 md:w-1/5 gap-3 p-6 border-r border-b border-line hover:bg-accent-muted transition-colors"
+                            className="flex cursor-pointer flex-col items-center justify-center w-1/2 sm:w-1/3 md:w-1/5 gap-3 p-6 border-r border-b border-line hover:bg-accent-muted transition-colors"
                         >
                             <div className="text-2xl text-foreground">
                                 {skill.icon}
