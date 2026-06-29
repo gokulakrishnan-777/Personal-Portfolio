@@ -19,6 +19,7 @@ const Contact = lazy(() => import('./assets/pages/Contact.jsx').then(module => (
 
 const BlogList = lazy(() => import('./assets/pages/BlogList.jsx'));
 const BlogPost = lazy(() => import('./assets/pages/BlogPost.jsx'));
+const NotFound = lazy(() => import('./assets/pages/NotFound.jsx'));
 
 const Portfolio = () => (
     <>
@@ -50,6 +51,11 @@ function App() {
                     <Route path="/blog/:slug" element={
                         <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>}>
                             <BlogPost />
+                        </Suspense>
+                    } />
+                    <Route path="*" element={
+                        <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>}>
+                            <NotFound />
                         </Suspense>
                     } />
                 </Routes>
