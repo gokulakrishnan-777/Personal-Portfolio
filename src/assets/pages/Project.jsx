@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Tooltip from '../components/Tooltip';
 
-const ProjectCard = ({ project }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+const ProjectCard = ({ project, isExpanded, onToggle }) => {
+    const contentRef = useRef(null);
 
     return (
         <div className="group relative px-2 flex flex-col border-b border-line last:border-b-0 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300">
             {/* Header / Toggle */}
             <button 
-                onClick={() => setIsExpanded(!isExpanded)}
+                onClick={onToggle}
                 className="flex items-center w-full py-5 text-left cursor-pointer"
             >
                 {/* Left Icon (Cube) */}
@@ -40,7 +40,7 @@ const ProjectCard = ({ project }) => {
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" 
-                            className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                            className={`transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isExpanded ? 'rotate-180' : ''}`}
                         >
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
@@ -49,12 +49,20 @@ const ProjectCard = ({ project }) => {
             </button>
 
             {/* Expandable Body */}
-            <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
-                <div className="overflow-hidden">
+            <div 
+                className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                style={{ 
+                    height: isExpanded ? `${contentRef.current?.scrollHeight}px` : '0px',
+                    opacity: isExpanded ? 1 : 0
+                }}
+            >
+                <div ref={contentRef}>
                     <div className="pb-6 pt-2 pl-14 pr-4">
-                        <p className="text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base">
-                            {project.description}
-                        </p>
+                        <ul className="list-disc list-inside text-muted-foreground mb-6 leading-relaxed text-sm sm:text-base space-y-1.5">
+                            {Array.isArray(project.description) ? project.description.map((point, i) => (
+                                <li key={i}>{point}</li>
+                            )) : <li>{project.description}</li>}
+                        </ul>
                         
                         <div className="flex items-center gap-6 mb-6">
                             <a href={project.live} target="_blank" rel="noopener noreferrer" className="text-sm font-medium hover:text-accent flex items-center gap-2 transition-colors">
@@ -82,12 +90,19 @@ const ProjectCard = ({ project }) => {
 };
 
 const Project = () => {
+    const [expandedIndex, setExpandedIndex] = useState(null);
+
     const projectData = [
         {
             title: "Skillswap",
             date: "2026",
             role: "Full Stack Developer",
-            description: "A MERN stack application that allows users to exchange skills and learn from each other.",
+            description: [
+                "A comprehensive MERN stack application empowering users to exchange skills and learn collaboratively.",
+                "Engineered real-time chat and video conferencing functionalities using Socket.io and WebRTC.",
+                "Architected a robust Redux state management system for seamless data flow.",
+                "Designed an intuitive, fully responsive UI utilizing Tailwind CSS."
+            ],
             tech: ["Next.js", "Node", "MongoDB", "Socket.io", "WebRTC", "Tailwind", "Redux"],
             live: "https://skillswap-five-beta.vercel.app/",
             github: "https://github.com/gokulakrishnan-777/law-based-ai-bot-application"
@@ -96,7 +111,12 @@ const Project = () => {
             title: "Nyayalite",
             date: "2025",
             role: "Full Stack Developer",
-            description: "A full-stack MERN application for Law awareness and legal information.",
+            description: [
+                "A full-stack MERN platform dedicated to spreading law awareness and providing accessible legal information.",
+                "Integrated an advanced AI/NLP powered chatbot to assist users with legal queries.",
+                "Implemented secure user authentication and personalized dashboards.",
+                "Optimized backend REST APIs for rapid response times and scalability."
+            ],
             tech: ["React", "Express", "Node", "AI/NLP"],
             live: "https://nyayalite-com.onrender.com/",
             github: "https://github.com/gokulakrishnan-777/law-based-ai-bot-application"
@@ -105,8 +125,13 @@ const Project = () => {
             title: "Portfolio Website",
             date: "2026",
             role: "Frontend Developer",
-            description: "Responsive personal portfolio built with Tailwind CSS and React.",
-            tech: ["React", "Tailwind CSS", "Vite"],
+            description: [
+                "A highly responsive, modern personal portfolio website built with Vite and React.",
+                "Implemented dynamic glassmorphism aesthetics and advanced smooth scrolling (Lenis).",
+                "Built an interactive CMD-K search modal and a dynamic theme switcher.",
+                "Optimized for maximum performance, accessibility, and SEO best practices."
+            ],
+            tech: ["React", "Tailwind CSS", "Vite", "Framer Motion"],
             live: "https://personal-portfolio-lyart-eight-94.vercel.app/",
             github: "https://github.com/gokulakrishnan-777/Personal-Portfolio"
         }
@@ -126,7 +151,12 @@ const Project = () => {
 
                 <div className="flex flex-col border-t border-line mt-4 ">
                     {projectData.map((project, index) => (
-                        <ProjectCard key={index} project={project} />
+                        <ProjectCard 
+                            key={index} 
+                            project={project} 
+                            isExpanded={expandedIndex === index}
+                            onToggle={() => setExpandedIndex(expandedIndex === index ? null : index)}
+                        />
                     ))}
                 </div>
             </div>

@@ -24,6 +24,8 @@ const SearchModal = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [isMounted, setIsMounted] = useState(false);
+
     // Toggle Modal Event
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -47,17 +49,24 @@ const SearchModal = () => {
         return () => window.removeEventListener('open-search', handleOpenSearch);
     }, []);
 
-    // Focus input when opened
+    // Handle animations and body scroll
     useEffect(() => {
         if (isOpen) {
+            setIsMounted(true);
             setTimeout(() => inputRef.current?.focus(), 10);
             setQuery('');
             setSelectedIndex(0);
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            if (isMounted) {
+                const timer = setTimeout(() => setIsMounted(false), 200);
+                return () => clearTimeout(timer);
+            }
         }
-    }, [isOpen]);
+    }, [isOpen, isMounted]);
 
     const filteredData = SEARCH_DATA.filter((item) =>
         item.label.toLowerCase().includes(query.toLowerCase())
@@ -125,19 +134,23 @@ const SearchModal = () => {
         }
     };
 
-    if (!isOpen) return null;
+    if (!isOpen && !isMounted) return null;
 
     return (
-        <div className="fixed inset-0 z-100  backdrop-blur-sm  flex items-start justify-center pt-[15vh] sm:pt-[20vh] px-4">
+        <div data-lenis-prevent="true" className="fixed inset-0 z-100 flex items-start justify-center pt-[15vh] sm:pt-[20vh] px-4">
             {/* Backdrop */}
             <div 
-                className="fixed  inset-0 bg-background/80 backdrop-blur-sm transition-opacity" 
+                className={`fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`} 
                 onClick={() => setIsOpen(false)}
             ></div>
 
             {/* Modal */}
             <dialog 
-                className="relative w-full max-w-xl bg-background  border border-line rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200"
+                className={`relative w-full max-w-xl bg-background border border-line rounded-xl shadow-2xl overflow-hidden flex flex-col duration-200 ${
+                    isOpen 
+                        ? 'animate-in fade-in zoom-in-95' 
+                        : 'animate-out fade-out zoom-out-95'
+                }`}
                 role="dialog"
                 aria-modal="true"
             >
