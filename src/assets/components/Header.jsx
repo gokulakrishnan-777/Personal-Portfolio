@@ -137,7 +137,8 @@ const Header = () => {
 
     return (
         <>
-            <header className="sticky top-2 z-50 w-full bg-background/80 backdrop-blur-md px-2 pt-2">
+            <div className="h-14 w-full shrink-0" aria-hidden="true"></div>
+            <header className="fixed top-0 left-0 right-0 z-50 w-full bg-background/80 backdrop-blur-md px-2 pt-2 pb-2">
                 <div className="screen-line-top screen-line-bottom mx-auto flex h-12 items-center justify-between gap-2 border-x border-line px-2 sm:gap-4 md:max-w-3xl relative">
                     
                     {/* Logo Mark */}

@@ -101,7 +101,7 @@ export const Home = () => {
                     </div>
                     <div className="flex items-center gap-4 font-mono text-sm">
                         <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground"><LinkIcon size={14}/></div>
-                        <a href="https://gokulakrishnana.vercel.app" target='_blank' className="hover:text-foreground transition-colors text-muted-foreground">gokulakrishnana.vercel.app</a>
+                        <a href="https://gokulakrishnana.vercel.app" target='_blank' className="hover:text-foreground transition-colors text-muted-foreground">www.gokulakrishnan.com</a>
                     </div>
                 </div>
             </section>
