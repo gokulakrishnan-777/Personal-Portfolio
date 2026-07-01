@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { flushSync } from 'react-dom';
+import React, { use, useEffect, useState, startTransition, useSyncExternalStore } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { themeContext } from '../context/themeApi';
 import { BsMoonStars } from "react-icons/bs";
@@ -39,14 +38,13 @@ const playHapticSound = () => {
 };
 
 const Header = () => {
-    const { theme, setTheme } = useContext(themeContext);
-    const [activeSection, setActiveSection] = useState('home');
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    useEffect(() => {
-        const handleScroll = () => {
+    const { theme, setTheme } = use(themeContext);
+    const activeSection = useSyncExternalStore(
+        (callback) => {
+            window.addEventListener('scroll', callback, { passive: true });
+            return () => window.removeEventListener('scroll', callback);
+        },
+        () => {
             const scrollPosition = window.scrollY + window.innerHeight / 3;
             let current = 'home';
             for (const id of SECTION_IDS) {
@@ -58,12 +56,13 @@ const Header = () => {
                     }
                 }
             }
-            setActiveSection(current);
-        };
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+            return current;
+        },
+        () => 'home'
+    );
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -97,34 +96,23 @@ const Header = () => {
         playHapticSound();
         const nextTheme = theme === 'dark' ? 'light' : 'dark';
         
-        if (!document.startViewTransition) {
+        startTransition(() => {
             setTheme(nextTheme);
-            return;
-        }
-
-        document.startViewTransition(() => {
-            flushSync(() => {
-                setTheme(nextTheme);
-                // Synchronously update the DOM so the view transition captures it immediately
-                const root = window.document.documentElement;
-                if (nextTheme === "dark") {
-                    root.classList.add("dark");
-                } else {
-                    root.classList.remove("dark");
-                }
-            });
+            const root = window.document.documentElement;
+            if (nextTheme === "dark") {
+                root.classList.add("dark");
+            } else {
+                root.classList.remove("dark");
+            }
         });
     };
 
     const scrollTo = (id) => {
-        setIsMenuOpen(false); // Close menu on click
+        setIsMenuOpen(false); 
         const HEADER = 72;
         
-        // If we are not on the home page (e.g. blog), navigate to home first
         if (window.location.pathname !== '/') {
-            // We use navigate from react-router-dom
             navigate('/', { replace: false });
-            // Wait for navigation and DOM render before scrolling
             setTimeout(() => {
                 if (id === 'home') {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -151,7 +139,6 @@ const Header = () => {
         }
     };
 
-    // Close menu when resizing to desktop
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
@@ -169,11 +156,11 @@ const Header = () => {
                 <div className="screen-line-top screen-line-bottom mx-auto flex h-12 items-center justify-between gap-2 border-x border-line px-2 sm:gap-4 md:max-w-3xl relative">
                     
                     {/* Logo Mark */}
-                    <a onClick={() => scrollTo('home')} className="cursor-pointer select-none transition-transform ease-out active:scale-[0.95]">
+                    <button type="button" onClick={() => scrollTo('home')} className="cursor-pointer select-none transition-transform ease-out active:scale-[0.95] appearance-none bg-transparent border-none p-0">
                         <div className="flex h-8 px-3 items-center justify-center rounded-lg  text-2xl font-semibold text-foreground  transition-colors ">
                             Gokul
                         </div>
-                    </a>
+                    </button>
                     
                     <div className="flex-1"></div>
                     
@@ -182,6 +169,7 @@ const Header = () => {
                         <nav className="flex items-center gap-4 max-md:hidden">
                             {SECTION_IDS.map((id) => (
                                 <button
+                                    type="button"
                                     key={id}
                                     onClick={() => scrollTo(id)}
                                     className={`text-sm font-medium cursor-pointer transition-colors hover:text-foreground ${
@@ -203,6 +191,7 @@ const Header = () => {
                             Blog
                         </Link>
                         <button 
+                            type="button"
                             onClick={() => window.dispatchEvent(new Event('open-search'))}
                             className="hidden md:flex cursor-pointer lg:fixed lg:right-0  items-center gap-2 h-8 px-3 rounded-md border border-line bg-muted/30 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mr-2"
                             aria-label="Search"
@@ -213,6 +202,7 @@ const Header = () => {
                         
                         {/* Mobile Search Icon */}
                         <button 
+                            type="button"
                             onClick={() => window.dispatchEvent(new Event('open-search'))}
                             className="flex md:hidden h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                             aria-label="Search"
@@ -221,6 +211,7 @@ const Header = () => {
                         </button>
 
                         <button 
+                            type="button"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="flex h-8 w-8 md:hidden items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                             aria-label="Toggle Menu"
@@ -246,6 +237,7 @@ const Header = () => {
                         
                         <Tooltip text="Toggle Mode" shortcut="D" position="bottom">
                             <button
+                                type="button"
                                 onClick={handleTheme}
                                 className="relative flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors overflow-hidden cursor-pointer"
                                 aria-label="Toggle Mode"
@@ -272,6 +264,7 @@ const Header = () => {
                     <nav className="flex flex-col p-4 gap-2">
                         {SECTION_IDS.map((id) => (
                             <button
+                                type="button"
                                 key={id}
                                 onClick={() => scrollTo(id)}
                                 className={`flex w-full items-center justify-between p-4 rounded-xl border border-line text-lg font-medium transition-colors ${

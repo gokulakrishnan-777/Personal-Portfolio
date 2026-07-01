@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { themeContext } from '../context/themeApi';
 
 const ThemeToggle = () => {
-    const { theme, setTheme } = useContext(themeContext);
+    const { theme, setTheme } = use(themeContext);
     const isDark = theme === 'dark';
 
     const handleTheme = () => {
@@ -11,6 +11,7 @@ const ThemeToggle = () => {
 
     return (
         <button
+            type="button"
             onClick={handleTheme}
             aria-label="Toggle Theme"
             className={`relative w-20 h-10 cursor-pointer rounded-full overflow-hidden transition-all duration-700 shadow-[inset_0_2px_6px_rgba(0,0,0,0.3)] shrink-0

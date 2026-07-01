@@ -1,45 +1,45 @@
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 import { themeContext } from '../context/themeApi';
 import { GrGithub } from 'react-icons/gr';
 
-const GithubContributions = () => {
-    const { theme } = useContext(themeContext);
+const drawGokul = (data) => {
+    if (!data || data.length === 0) return data;
 
-    const drawGokul = (data) => {
-        if (!data || data.length === 0) return data;
+    const textGrid = [
+        ".XXX .XX. X..X X..X X...",
+        "X... X..X X.X. X..X X...",
+        "X.XX X..X XX.. X..X X...",
+        "X..X X..X X.X. X..X X...",
+        ".XXX .XX. X..X .XX. XXXX"
+    ].map(row => row.replace(/ /g, '.'));
 
-        const textGrid = [
-            ".XXX .XX. X..X X..X X...",
-            "X... X..X X.X. X..X X...",
-            "X.XX X..X XX.. X..X X...",
-            "X..X X..X X.X. X..X X...",
-            ".XXX .XX. X..X .XX. XXXX"
-        ].map(row => row.replace(/ /g, '.'));
+    const startDate = new Date(data[0].date);
+    const startDayOfWeek = startDate.getDay(); 
+    
+    const startCol = 14; 
+    const startRow = 1;  
 
-        const startDate = new Date(data[0].date);
-        const startDayOfWeek = startDate.getDay(); 
+    return data.map((day, index) => {
+        const offsetIndex = index + startDayOfWeek;
+        const col = Math.floor(offsetIndex / 7);
+        const row = offsetIndex % 7;
         
-        const startCol = 14; 
-        const startRow = 1;  
-
-        return data.map((day, index) => {
-            const offsetIndex = index + startDayOfWeek;
-            const col = Math.floor(offsetIndex / 7);
-            const row = offsetIndex % 7;
-            
-            let level = 0;
-            
-            if (row >= startRow && row < startRow + 5 && col >= startCol && col < startCol + 24) {
-                const char = textGrid[row - startRow][col - startCol];
-                if (char === 'X') {
-                    level = 4; 
-                }
+        let level = 0;
+        
+        if (row >= startRow && row < startRow + 5 && col >= startCol && col < startCol + 24) {
+            const char = textGrid[row - startRow][col - startCol];
+            if (char === 'X') {
+                level = 4; 
             }
-            
-            return { ...day, level, count: level > 0 ? 100 : 0 };
-        });
-    };
+        }
+        
+        return { ...day, level, count: level > 0 ? 100 : 0 };
+    });
+};
+
+const GithubContributions = () => {
+    const { theme } = use(themeContext);
 
     return (
         <section id="contributions" className="mx-auto w-full overflow-x-clip  px-2 md:max-w-3xl pt-8 pb-16">

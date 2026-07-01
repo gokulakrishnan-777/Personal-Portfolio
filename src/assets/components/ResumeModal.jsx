@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import { useLenis } from 'lenis/react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m as motion } from 'framer-motion';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 // Set up pdf.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
+const LoadingMessage = (
+    <div className="flex items-center justify-center py-20 text-muted-foreground">
+        <div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></div>
+        <span className="ml-3 font-medium text-sm">Loading PDF...</span>
+    </div>
+);
 
 const ResumeModal = ({ isOpen, onClose }) => {
     const [numPages, setNumPages] = useState(null);
@@ -83,11 +90,11 @@ const ResumeModal = ({ isOpen, onClose }) => {
                         <h2 className="text-lg font-semibold tracking-tight text-foreground hidden sm:block">Resume Preview</h2>
                         {/* Zoom Controls */}
                         <div className="flex items-center bg-muted/50 rounded-lg p-1">
-                            <button onClick={handleZoomOut} className="p-1 sm:p-1.5 hover:bg-muted rounded-md text-muted-foreground hover:text-foreground transition-colors">
+                            <button type="button" onClick={handleZoomOut} className="p-1 sm:p-1.5 hover:bg-muted rounded-md text-muted-foreground hover:text-foreground transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                             </button>
                             <span className="text-xs font-medium w-10 sm:w-12 text-center text-muted-foreground">{Math.round(scale * 100)}%</span>
-                            <button onClick={handleZoomIn} className="p-1 sm:p-1.5 hover:bg-muted rounded-md text-muted-foreground hover:text-foreground transition-colors">
+                            <button type="button" onClick={handleZoomIn} className="p-1 sm:p-1.5 hover:bg-muted rounded-md text-muted-foreground hover:text-foreground transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                             </button>
                         </div>
@@ -103,6 +110,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                             <span className="hidden sm:block">Download</span>
                         </a>
                         <button 
+                            type="button"
                             onClick={onClose}
                             className="p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground rounded-md transition-colors"
                             aria-label="Close modal"
@@ -118,12 +126,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                         file="/gokulakrishnan_software_developer.pdf"
                         onLoadSuccess={onDocumentLoadSuccess}
                         className="flex flex-col items-center gap-4"
-                        loading={
-                            <div className="flex items-center justify-center py-20 text-muted-foreground">
-                                <div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin"></div>
-                                <span className="ml-3 font-medium text-sm">Loading PDF...</span>
-                            </div>
-                        }
+                        loading={LoadingMessage}
                     >
                         {Array.from(new Array(numPages), (el, index) => (
                             <Page 
@@ -140,7 +143,14 @@ const ResumeModal = ({ isOpen, onClose }) => {
                 </div>
             
                 {/* Click outside to close */}
-                <div className="absolute inset-0 -z-10" onClick={onClose}></div>
+                <div 
+                    className="absolute inset-0 -z-10" 
+                    onClick={onClose}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClose(); }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Close modal backdrop"
+                ></div>
                 </motion.div>
             </motion.div>
             )}

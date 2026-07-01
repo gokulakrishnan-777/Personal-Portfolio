@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { themeContext } from "./themeApi";
 
 const ApiProvider = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
+  const contextValue = useMemo(() => ({ theme, setTheme }), [theme]);
+
   return (
-    <themeContext.Provider value={{ theme, setTheme }}>
+    <themeContext.Provider value={contextValue}>
       {children}
     </themeContext.Provider>
   );

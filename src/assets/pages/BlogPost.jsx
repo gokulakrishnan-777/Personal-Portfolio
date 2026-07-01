@@ -67,7 +67,8 @@ const TOCSidebar = ({ title }) => {
         >
             <div className={`flex flex-col items-end gap-3 py-3 pl-6 pr-2 transition-all duration-300 ${isHovered ? 'opacity-0 scale-90 blur-sm' : 'opacity-100 scale-100 blur-none'}`}>
                 {headings.map((h, i) => (
-                    <div 
+                    <button 
+                        type="button"
                         key={i} 
                         className={`h-1 shrink-0 rounded-sm transition-all duration-300 ease-out cursor-pointer ${
                             activeId === h.id ? 'bg-foreground w-8' : 'bg-muted-foreground/30 w-6 hover:bg-foreground hover:w-8'
@@ -76,7 +77,8 @@ const TOCSidebar = ({ title }) => {
                             const el = document.getElementById(h.id);
                             if(el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
-                    ></div>
+                        aria-label={`Scroll to ${h.text}`}
+                    ></button>
                 ))}
             </div>
 
@@ -87,27 +89,34 @@ const TOCSidebar = ({ title }) => {
                 }`}
             >
                 <h4 
+                    role="button"
+                    tabIndex={0}
                     className="text-base font-semibold text-foreground/80 mb-4 pb-2 border-b border-line cursor-pointer hover:text-black dark:hover:text-white transition-colors"
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }}
                 >
                     {title || "Table of Contents"}
                 </h4>
                 <nav className="flex flex-col gap-3">
                     {headings.map((h, i) => (
-                        <a 
+                        <button 
                             key={i} 
-                            href={`#${h.id}`} 
-                            className={`transition-colors leading-tight ${
+                            type="button"
+                            className={`text-left transition-colors leading-tight ${
                                 activeId === h.id ? 'text-foreground' : 'hover:text-foreground'
                             }`}
-                            onClick={(e) => {
-                                e.preventDefault();
+                            onClick={() => {
                                 const el = document.getElementById(h.id);
                                 if(el) el.scrollIntoView({ behavior: 'smooth' });
                             }}
                         >
                             {h.text}
-                        </a>
+                        </button>
                     ))}
                 </nav>
             </div>
@@ -144,7 +153,7 @@ const BlogPost = () => {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen">
                 <h1 className="text-2xl font-bold mb-4">Blog Post Not Found</h1>
-                <button onClick={() => navigate('/blog')} className="text-muted-foreground hover:text-foreground underline">
+                <button type="button" onClick={() => navigate('/blog')} className="text-muted-foreground hover:text-foreground underline">
                     Return to Blog
                 </button>
             </div>
@@ -226,12 +235,12 @@ const BlogPost = () => {
                             {/* Copy Dropdown */}
                             <div className="relative" ref={copyRef}>
                                 <div className="flex items-stretch rounded-lg border border-line bg-secondary overflow-hidden">
-                                    <button onClick={handleCopyLink} className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.8125rem] font-medium hover:bg-secondary/80 transition-colors">
+                                    <button type="button" onClick={handleCopyLink} className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.8125rem] font-medium hover:bg-secondary/80 transition-colors">
                                         {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                                         <span className="max-[28rem]:hidden">{copied ? "Copied!" : "Copy Page"}</span>
                                     </button>
                                     <div className="w-px bg-line"></div>
-                                    <button onClick={() => setIsCopyOpen(!isCopyOpen)} className="inline-flex items-center justify-center px-2 py-1 hover:bg-secondary/80 transition-colors">
+                                    <button type="button" onClick={() => setIsCopyOpen(!isCopyOpen)} className="inline-flex items-center justify-center px-2 py-1 hover:bg-secondary/80 transition-colors">
                                         <ChevronDown size={14} className={`transition-transform duration-200 ${isCopyOpen ? 'rotate-180' : ''}`} />
                                     </button>
                                 </div>
@@ -239,25 +248,25 @@ const BlogPost = () => {
                                 {/* Dropdown Menu */}
                                 {isCopyOpen && (
                                     <div className="absolute right-0 mt-2 w-56 rounded-xl border border-line bg-[#1c1c1f] p-1.5 shadow-xl z-50 flex flex-col gap-0.5 animate-in fade-in slide-in-from-top-2 duration-200">
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => { window.open(window.location.href + '.md', '_blank'); setIsCopyOpen(false); }}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => { window.open(window.location.href + '.md', '_blank'); setIsCopyOpen(false); }}>
                                             <FileCode size={15} /> View as Markdown
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => { window.open('https://github.com/gokulakrishnan-777/Personal-Portfolio', '_blank'); setIsCopyOpen(false); }}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => { window.open('https://github.com/gokulakrishnan-777/Personal-Portfolio', '_blank'); setIsCopyOpen(false); }}>
                                             <SiGithub size={15} /> Open in GitHub
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('chatgpt')}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('chatgpt')}>
                                             <MessageSquare size={15} /> Open in ChatGPT
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('claude')}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('claude')}>
                                             <Sparkles size={15} /> Open in Claude
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('cursor')}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('cursor')}>
                                             <Box size={15} /> Open in Cursor
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('grok')}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('grok')}>
                                             <Circle size={15} /> Open in Grok
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('scira')}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => openAI('scira')}>
                                             <Sparkles size={15} /> Open in Scira AI
                                         </button>
                                     </div>
@@ -266,22 +275,22 @@ const BlogPost = () => {
 
                             {/* Share Dropdown */}
                             <div className="relative" ref={shareRef}>
-                                <button onClick={() => setIsShareOpen(!isShareOpen)} className={`inline-flex items-center justify-center size-7 rounded-lg border border-line transition-colors ${isShareOpen ? 'bg-secondary/80' : 'bg-secondary hover:bg-secondary/80'}`}>
+                                <button type="button" onClick={() => setIsShareOpen(!isShareOpen)} className={`inline-flex items-center justify-center size-7 rounded-lg border border-line transition-colors ${isShareOpen ? 'bg-secondary/80' : 'bg-secondary hover:bg-secondary/80'}`}>
                                     <Share size={14} />
                                 </button>
                                 
                                 {isShareOpen && (
                                     <div className="absolute right-0 mt-2 w-48 rounded-xl border border-line bg-[#1c1c1f] p-1.5 shadow-xl z-50 flex flex-col gap-0.5 animate-in fade-in slide-in-from-top-2 duration-200">
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => { handleCopyLink(); setIsShareOpen(false); }}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={() => { handleCopyLink(); setIsShareOpen(false); }}>
                                             <Link2 size={15} /> Copy link
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={handleShareX}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={handleShareX}>
                                             <SiX size={15} /> Share on X
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={handleShareLinkedIn}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={handleShareLinkedIn}>
                                             <SiLinkedin size={15} /> Share on LinkedIn
                                         </button>
-                                        <button className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={handleShareOther}>
+                                        <button type="button" className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-sm text-white/90 hover:bg-white/10 transition-colors text-left" onClick={handleShareOther}>
                                             <MoreHorizontal size={15} /> Other app
                                         </button>
                                     </div>
