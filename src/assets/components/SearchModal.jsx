@@ -142,6 +142,10 @@ const SearchModal = () => {
             <div 
                 className={`fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`} 
                 onClick={() => setIsOpen(false)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}
+                role="button"
+                tabIndex={0}
+                aria-label="Close search backdrop"
             ></div>
 
             {/* Modal */}
@@ -183,6 +187,7 @@ const SearchModal = () => {
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <button
+                                        type="button"
                                         key={item.id}
                                         onClick={() => handleSelect(item)}
                                         onMouseEnter={() => setSelectedIndex(index)}

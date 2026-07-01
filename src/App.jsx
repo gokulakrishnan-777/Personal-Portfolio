@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { LazyMotion, domAnimation, AnimatePresence, m as motion } from 'framer-motion';
 import Header from './assets/components/Header'
 import { Home } from './assets/pages/Home.jsx'
 import '@fontsource-variable/sansita-swashed';
@@ -71,7 +71,8 @@ function App() {
         <ApiProvider>
             {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
             
-            <div className={`w-full overflow-x-clip relative min-h-screen transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
+            <LazyMotion features={domAnimation}>
+                <div className={`w-full overflow-x-clip relative min-h-screen transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
                 <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
                     <Routes location={location} key={location.pathname}>
                         <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
@@ -108,6 +109,7 @@ function App() {
                 <BackToTop />
                 <SearchModal />
             </div>
+            </LazyMotion>
         </ApiProvider>
     )
 }

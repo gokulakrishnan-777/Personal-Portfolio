@@ -15,10 +15,14 @@ const SkillSwapContent = () => {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="block mb-10 overflow-hidden rounded-xl border border-line hover:border-foreground/50 transition-colors group shadow-lg"
+                aria-label="Visit SkillSwap live preview website"
             >
                 <img 
-                    src="/skillswap.png" 
-                    alt="SkillSwap Preview" 
+                    src="/skillswap.webp" 
+                    alt="SkillSwap Live Preview Interface" 
+                    loading="lazy"
+                    width="1200"
+                    height="800"
                     className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out" 
                 />
             </a>

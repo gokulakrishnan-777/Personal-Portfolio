@@ -12,8 +12,8 @@ const Loader = ({ onComplete }) => {
                     clearInterval(interval);
                     setTimeout(() => {
                         setIsFading(true);
-                        setTimeout(onComplete, 800); // wait for fade out
-                    }, 400); // hold at 100% briefly
+                        setTimeout(onComplete, 800); 
+                    }, 400); 
                     return 100;
                 }
                 return next;
@@ -25,7 +25,7 @@ const Loader = ({ onComplete }) => {
 
     return (
         <div 
-            className={`fixed inset-0 z-[9999] bg-background flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}
+            className={`fixed inset-0 z-9999 bg-background flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}
         >
             <div className="relative flex flex-col items-center">
                 {/* Glowing Background Blob */}
@@ -43,7 +43,7 @@ const Loader = ({ onComplete }) => {
                 </div>
                 
                 {/* Progress Bar */}
-                <div className="w-48 md:w-64 h-[2px] bg-line rounded-full overflow-hidden relative">
+                <div className="w-48 md:w-64 h-0.5 bg-line rounded-full overflow-hidden relative">
                     <div 
                         className="absolute top-0 left-0 h-full bg-foreground transition-[width] duration-150 ease-out"
                         style={{ width: `${progress}%` }}

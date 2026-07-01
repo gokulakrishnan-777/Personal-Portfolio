@@ -8,6 +8,7 @@ const ProjectCard = ({ project, isExpanded, onToggle }) => {
         <div className="group relative px-2 flex flex-col border-b border-line last:border-b-0 hover:bg-black/5 dark:hover:bg-black/40 hover:backdrop-blur-md transition-all duration-300">
             {/* Header / Toggle */}
             <button 
+                type="button"
                 onClick={onToggle}
                 className="flex items-center w-full py-5 text-left cursor-pointer"
             >

@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from '../components/Header';
-import { Trophy } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 import BackToTop from '../components/BackToTop';
+import { Link } from 'react-router-dom';
 
 const Certificates = () => {
     return (
@@ -12,6 +13,12 @@ const Certificates = () => {
 
             <main className="flex-1 w-full mx-auto px-2 md:max-w-3xl pt-8 pb-16">
                 <div className="screen-line-top screen-line-bottom border-x border-line p-4 md:p-6 min-h-[60vh]">
+                    <div className="mb-6">
+                        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                            <ArrowLeft size={16} />
+                            Home
+                        </Link>
+                    </div>
                     <div className="flex items-center gap-4 font-mono text-sm mb-8">
                         <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-line bg-muted text-muted-foreground">
                             <Trophy size={14} />
@@ -39,8 +46,11 @@ const Certificates = () => {
                                 <div className="relative bg-white shadow-sm ring-1 ring-black/10 overflow-hidden">
                                     <a href="/certificate.jpg" target="_blank" rel="noopener noreferrer" className="block relative">
                                         <img 
-                                            src="/certificate.jpg" 
+                                            src="/certificate.webp" 
                                             alt="Internship Certificate - CyberDude Networks" 
+                                            loading="lazy"
+                                            width="800"
+                                            height="600"
                                             className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
                                             onError={(e) => {
                                                 e.target.onerror = null;

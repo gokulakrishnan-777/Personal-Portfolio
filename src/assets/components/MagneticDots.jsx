@@ -115,7 +115,7 @@ const MagneticDots = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 z-0 cursor-crosshair pointer-events-auto"
+            className="absolute  inset-0 z-0 cursor-crosshair pointer-events-auto"
             style={{ width: '100%', height: '100%' }}
         />
     );

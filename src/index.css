@@ -44,11 +44,7 @@ body {
   overflow-x: hidden;
 }
 
-*,
-::before,
-::after {
-  /* Removed heavy global transitions that caused interaction lag */
-}
+
 
 /* Structural styling matching the target site */
 .screen-line-top {
@@ -200,4 +196,23 @@ h3[id] {
 
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #e5e5e5;
+}
+
+
+/* Add this to your global CSS stylesheet */
+body.modal-open {
+  overflow: hidden;
+  /* Uses the modern scrollbar-gutter property to reserve space for the scrollbar */
+  scrollbar-gutter: stable; 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

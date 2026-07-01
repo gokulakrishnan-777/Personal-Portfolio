@@ -79,7 +79,7 @@ const NotFound = () => {
                     <div className="relative overflow-hidden flex flex-col items-center max-w-md text-center p-10 rounded-4xl border border-line bg-foreground/5 backdrop-blur-2xl shadow-xl before:absolute before:inset-0 before:bg-linear-to-b before:from-foreground/5 before:to-transparent before:rounded-4xl before:-z-10 group">
                         
                         {/* Inner glowing blobs */}
-                        <div className="absolute -top-20 -left-20 w-48 h-48 bg-accent/30 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150 group-hover:bg-accent/40"></div>
+                       <div className="absolute -top-20 -left-20 w-48 h-48 bg-white/30 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150 group-hover:bg-black/40"></div>
                         <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150 group-hover:bg-purple-500/30"></div>
                         
                         <h1 className="text-8xl font-black text-transparent bg-clip-text bg-linear-to-b from-foreground to-foreground/40 mb-2 tracking-tighter drop-shadow-sm">

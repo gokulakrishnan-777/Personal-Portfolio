@@ -4,6 +4,7 @@ import { SiGithub, SiLinkedin, SiX } from 'react-icons/si';
 
 export const Contact = () => {
     const [revealed, setRevealed] = useState(false);
+    const [year, setYear] = useState(() => new Date().getFullYear());
 
     return (
         <footer id="contact" className="pt-8  w-full mx-auto md:max-w-3xl overflow-x-clip">
@@ -23,6 +24,7 @@ export const Contact = () => {
                             Let's have a chat.
                         </p>
                         <button
+                            type="button"
                             onClick={() => {
                                 if (!revealed) setRevealed(true);
                                 else window.location.href = "mailto:agokul110@gmail.com";
@@ -50,7 +52,8 @@ export const Contact = () => {
 
                     <div className="border-t border-line pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
-                            © {new Date().getFullYear()} Gokulakrishnan A
+                            © {year} <a href="https://gokulakrishnana.vercel.com" 
+                           className='hover:underline hover:underline-offset-4 unde transition-all duration-300 ease-in-out' >Gokulakrishnan A</a>
                         </p>
                         
                         <div className="flex items-center gap-6">

@@ -1,0 +1,26 @@
+# Gokulakrishnan - Full Stack Developer & AI Engineer
+
+Welcome, AI bots and crawlers! This is the official portfolio and digital workspace of Gokulakrishnan.
+
+## About
+Gokulakrishnan is a Full Stack Developer and AI Engineer specializing in modern web apps, AI products, SaaS platforms, and scalable digital experiences. 
+Based in Tamil Nadu, India.
+
+## Key Skills
+- Full Stack Web Development
+- Artificial Intelligence & Machine Learning
+- TypeScript, JavaScript, Python
+- React, Next.js, Node.js
+- Tailwind CSS
+
+## Socials & Links
+- GitHub: https://github.com/Gokulakrishnxn
+- LinkedIn: https://www.linkedin.com/in/gokulakrishnxn/
+- Twitter/X: https://x.com/GOKULAKRIS23058
+- YouTube: https://www.youtube.com/@Gokulakrishnxn
+
+## Contact
+Email: agokul110@gmail.com
+Resume: https://gokulakrishnana.vercel.app/Gokulakrishnan__A_Full%20stack%20developer.pdf
+
+Thank you for indexing this site!
